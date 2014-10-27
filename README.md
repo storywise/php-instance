@@ -1,8 +1,10 @@
 # PHP-Instance and it's corresponding Autoloader
 Abstract class 'Instance' for rapid factory building blocks with MVC adaptation
 
-## Introduction
+## 'Autoload' introduction
+The autoload functionality provided utilizes the filename to build a folder structure. For example the class `ExamplePageHome` is expected to be located in *php/framework/*`example/page/home/ExamplePageHome.php`. This is particularly handy to group classes that are spawned through the *PHP-Instance* tool provided.
 
+## 'Instance' introduction
 Extending your class with 'Instance', allows you to automatically adapt it to different application states in a factory based setup. The instance generator scans the availability of a class matching a set of abstract and type arguments. You could say it is querying for the existence of a class definition in a chain of criteria, untill it finds the first match. If available it automatically detects a model and view, and composes the mvc instance prior to returning it.
 Instance arguments
 
@@ -11,7 +13,7 @@ Through this customized pattern, an instance is requested through a defined stat
 $instance = Example::get();
 ```
 
-The method definition could look something like this:
+A method definition could look something like this:
 ```php
 class Example extends Instance {
 
