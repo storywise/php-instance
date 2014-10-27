@@ -7,7 +7,16 @@ abstract class Instance {
 
         private static $singleton = array();
         private static $cache = array();
-        
+        private static $debugging = false;
+
+        /**
+         * For the sake of the demo, allow for debug messages
+         * @param boolean $on
+         */
+        public static function setDebugging($on = true) {
+                self::$debugging = $on;
+        }
+
         private static function getExistingTypeByList($types) {
 
                 // Create signature of types as one string
@@ -18,8 +27,8 @@ abstract class Instance {
                         return self::$cache[$signature];
 
                 // This starts with the full type i.e. ImageJpeg, and second just Image as a general type
-                $numTypes =  count($types);
-                for ($i = 0; $i <$numTypes; $i++) {
+                $numTypes = count($types);
+                for ($i = 0; $i < $numTypes; $i++) {
 
                         // Type of Class
                         $specificType = $types[$i];
@@ -80,7 +89,7 @@ abstract class Instance {
                                 // For example OneTwoThree will never return One. Can also be enforced
                                 // by the `abstract class` keyword in PHP
                                 $doSkipAbstract = !$options[self::OPTION_ABSTRACT] && $str == $abstract;
-                                
+
                                 if (!$doSkipAbstract)
                                         array_unshift($arr, $strType);
 
@@ -99,14 +108,16 @@ abstract class Instance {
                         if ($isFirstNoChainItt)
                                 break;
                 }
-                
-                echo '<div style="margin-bottom:15px;">';
-                echo 'Instance is scanning the existence of these classes in order of appearance, and will return first class found:';
-                echo '<pre>';
-                echo print_r( $arr, true );
-                echo '</pre>';
-                echo '</div>';
-                
+
+                if (self::$debugging) {
+                        echo '<div style="margin-bottom:15px;">' .
+                        'Possible instance list:' .
+                        '<pre>' .
+                        print_r($arr, true) .
+                        '</pre>' .
+                        '</div>';
+                }
+
                 return self::getExistingTypeByList($arr);
         }
 

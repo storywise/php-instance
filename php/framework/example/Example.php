@@ -25,7 +25,6 @@ class Example extends Instance {
         
         public function __construct(DbConnect $model = null, $view = null) {
                 parent::__construct( $model, $view );
-                echo "Example constructor<br>\n";
         }
         
         public function setContext( $context ) {
