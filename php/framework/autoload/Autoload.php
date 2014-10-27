@@ -3,13 +3,12 @@
 class AutoloadFolderFilter extends RecursiveFilterIterator {
 
         public function accept() {
+                
                 $file = $this->current();
                 $isDir = $file->isDir();
                 $fileName = $file->getFilename();
-
-                // Version history not needed any more with AutloadApp helpers
-                // It will always just pick the installed version or enabled app
-                //$isVersionHistoryFolder = $fileName != 'versionhistory';
+                
+                // Two leading underscores means we skip the folder and its contents
                 $isDisabledFolder = strpos($fileName, '__') !== false;
 
                 if ($isDir && !$isDisabledFolder) {
@@ -31,11 +30,21 @@ class Autoload {
 
         private static $frameworks;
 
+        /**
+         * Prior to registering the Autoloader, it's possible to define
+         * framework folders in various locations.
+         */
         public static function setFrameworkFolders() {
                 self::$frameworks = array();
                 self::setFrameworkFoldersIn('php');
         }
 
+        /**
+         * Allocate framework folders and configure in static array.
+         * 
+         * @param type $folder
+         * @param type $alt
+         */
         public static function setFrameworkFoldersIn($folder, $alt = true) {
 
                 $dir = new RecursiveDirectoryIterator(ROOT . $folder, RecursiveDirectoryIterator::SKIP_DOTS);
@@ -57,6 +66,13 @@ class Autoload {
                 }
         }
 
+        /**
+         * Automatically called when a class is referred to in php code.
+         * Doesn't invoke when the class has already been loaded before and so is made available.
+         * 
+         * @param type $class
+         * @return boolean
+         */
         public static function load($class) {
 
                 if (!isset(self::$frameworks))
