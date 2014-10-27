@@ -1,4 +1,4 @@
-# PHP-Instance and it's corresponding Autoloader
+# PHP-Instance and it's Autoload
 Abstract class 'Instance' for rapid factory building blocks with MVC adaptation
 
 ## 'Autoload' introduction
