@@ -68,4 +68,8 @@ Enables scanning for available user authority types, which should be set during 
 ### Instance::$NOABSTRACT 
 Instance configuration allowing only to create a subtype of the abstract definition, never the composite of just the abstract.
 
+------
+
 Forgive me if my explanations are somewhat obscure, i'll keep working on them and provide more building blocks in different projects that will allow some nice rapid development of php applications.
+
+Merten Snijders
