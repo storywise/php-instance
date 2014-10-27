@@ -13,13 +13,29 @@ $instance = Example::get();
 
 The method definition could look something like this:
 ```php
-public static function get() {
-        $instance = Instance::create( 
-                array('example'), 
-                array('affordable'), 
-                Instance::$SINGLETON, Instance::$AUTH 
-        );
-        return $instance;
+class Example extends Instance {
+
+        /**
+        * Receiving an instance of Example does not occur through $var = new Example();
+        * But through $var = Example::get();
+        */
+        public static function get() {
+                $instance = Instance::create( 
+                        array('example'), 
+                        array('affordable'), 
+                        Instance::$SINGLETON, // Pass in as many configurations after the second argument
+                        Instance::$AUTH 
+                );
+                return $instance;
+        }
+        
+        /**
+        * If the programmer desires so, a matching model and/or view can be defined for 
+        * the implemenation of Example. The constructor of an 'Instance' always accepts a model and view argument.
+        */
+        public function __construct( InstanceModel $model = null, InstanceView $view = null ) {
+                parent::__construct( $model, $view );
+        }
 }
 ```
 
